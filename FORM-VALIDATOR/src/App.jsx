@@ -1,0 +1,10 @@
+import React from "react";
+import { useState } from "react";
+function App() {
+  const [values, setValues] = useState({ username: "", email: "", password: "", confirmPassword: "" }); const [errors, setErrors] = useState({}); const [success, setSuccess] = useState(false);
+  function update(event) { setValues({ ...values, [event.target.name]: event.target.value }); setErrors({ ...errors, [event.target.name]: "" }); setSuccess(false); }
+  function submit(event) { event.preventDefault(); const next = {}; const names = { username: "Username", email: "Email", password: "Password", confirmPassword: "Confirm password" }; Object.entries(values).forEach(([key, value]) => { if (!value.trim()) next[key] = names[key] + " is required"; }); if (!next.username && (values.username.length < 3 || values.username.length > 25)) next.username = "Username must be 3 to 25 characters."; if (!next.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) next.email = "Email is not valid"; if (!next.password && (values.password.length < 8 || values.password.length > 25)) next.password = "Password must be 8 to 25 characters."; if (!next.confirmPassword && values.password !== values.confirmPassword) next.confirmPassword = "Passwords do not match"; setErrors(next); if (!Object.keys(next).length) { setSuccess(true); setValues({ username: "", email: "", password: "", confirmPassword: "" }); } }
+  const fields = [["username", "Username", "text"], ["email", "Email", "email"], ["password", "Password", "password"], ["confirmPassword", "Confirm Password", "password"]];
+  return <div className="container"><form id="registration-form" onSubmit={submit} noValidate><h1>Register</h1>{fields.map(([name, label, type]) => <div className={"form-group " + (errors[name] ? "error" : values[name] ? "success" : "")} key={name}><label htmlFor={name}>{label}</label><input type={type} id={name} name={name} placeholder={"Enter " + label.toLowerCase()} value={values[name]} onChange={update} /><small>{errors[name] || ""}</small></div>)}<button type="submit">Register</button>{success && <p role="status">Registration successful!</p>}</form></div>;
+}
+export default App;

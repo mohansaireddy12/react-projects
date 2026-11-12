@@ -1,0 +1,33 @@
+{
+  "name": "frontend-projects-react",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "./404-PAGE",
+    "./BOOKMARK-SAVER",
+    "./COMING-SOON-UI",
+    "./CONTACT-FORM",
+    "./CONTACT-PAGE",
+    "./CURRENCY-CONVERTER",
+    "./DRAG-AND-DROP",
+    "./EXPENSE-TRACKER",
+    "./FORM-VALIDATOR",
+    "./GITHUB-FINDER",
+    "./NEWSLETTER-SIGNUP",
+    "./PASSWORD-GENERATOR",
+    "./PRICING-CARDS",
+    "./QUIZ-GAME",
+    "./RANDOM COLOR  PALLETE  GENERATER",
+    "./RECIPE-FINDER",
+    "./SCROLL-PROGRESS",
+    "./TEAM-MEMBERS-SHOWCASE",
+    "./TODO-APP"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present"
+  },
+  "devDependencies": {
+    "vite": "latest",
+    "@vitejs/plugin-react": "latest"
+  }
+}

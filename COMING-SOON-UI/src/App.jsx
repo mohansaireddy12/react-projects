@@ -1,0 +1,13 @@
+import React, { useEffect, useState } from "react";
+function App() {
+  const launchDate = new Date(2027, 0, 1, 12, 0);
+  const [time, setTime] = useState(() => getTimeLeft(launchDate));
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  useEffect(() => { const timer = setInterval(() => setTime(getTimeLeft(launchDate)), 1000); return () => clearInterval(timer); }, []);
+  function submit(event) { event.preventDefault(); setSending(true); setTimeout(() => { setSending(false); setSubmitted(true); }, 1000); }
+  return <><div className="bg"><div className="blob blob-1"></div><div className="blob blob-2"></div><div className="blob blob-3"></div></div><main className="container"><div className="logo"><div className="logo-icon"><i className="fa-solid fa-bolt"></i></div><span>Flux</span></div><section className="hero"><div className="badge"><span className="pulse"></span>Coming Soon</div><h1>Something awesome is brewing.</h1><p>We're working hard to bring you something special. Be the first to know when we launch.</p></section><section className="countdown">{[["days", "Days"], ["hours", "Hours"], ["minutes", "Minutes"], ["seconds", "Seconds"]].map(([key, label], index) => <React.Fragment key={key}>{index > 0 && <span className="separator">:</span>}<div className="time-block"><span className="time-value">{time[key]}</span><span className="time-label">{label}</span></div></React.Fragment>)}</section>{!submitted ? <form className="email-form" onSubmit={submit}><div className="input-group"><i className="fa-solid fa-envelope"></i><input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Enter your email" /></div><button type="submit" disabled={sending}>{sending ? "Joining..." : <>Notify Me <i className="fa-solid fa-arrow-right"></i></>}</button></form> : <div className="success-message"><i className="fa-solid fa-check-circle"></i><span>You're on the list! We'll notify you when we launch.</span></div>}<div className="socials"><a href="#" aria-label="X"><i className="fa-brands fa-x-twitter"></i></a><a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a><a href="#" aria-label="Discord"><i className="fa-brands fa-discord"></i></a></div></main></>;
+}
+function getTimeLeft(date) { const diff = Math.max(0, date - new Date()); return { days: String(Math.floor(diff / 86400000)).padStart(2, "0"), hours: String(Math.floor(diff % 86400000 / 3600000)).padStart(2, "0"), minutes: String(Math.floor(diff % 3600000 / 60000)).padStart(2, "0"), seconds: String(Math.floor(diff % 60000 / 1000)).padStart(2, "0") }; }
+export default App;
